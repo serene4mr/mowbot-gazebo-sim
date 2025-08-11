@@ -26,7 +26,7 @@ docker run -it --rm \
   -e DISPLAY=$DISPLAY \
   -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
   --network=host \
-  mowbot-gazebo-sim:latest
+  ghcr.io/serene4mr/mowbot-gazebo-sim:latest
 ```
 
 ### Run with Docker Compose
@@ -81,7 +81,7 @@ This container is designed to run alongside your ROS 2 application container:
 # In your main docker-compose.yml
 services:
   gazebo-sim:
-    image: mowbot-gazebo-sim:latest
+    image: ghcr.io/serene4mr/mowbot-gazebo-sim:latest
     network_mode: host
     environment:
       - DISPLAY=${DISPLAY}

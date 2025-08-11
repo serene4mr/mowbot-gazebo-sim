@@ -3,8 +3,9 @@ version: '3.8'
 services:
   gazebo-sim:
     build:
-      context: ..
+      context: .
       dockerfile: docker/Dockerfile
+    image: ghcr.io/serene4mr/mowbot-gazebo-sim:latest
     container_name: mowbot-gazebo-sim
     environment:
       - DISPLAY=${DISPLAY}

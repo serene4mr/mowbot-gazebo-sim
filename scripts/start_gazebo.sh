@@ -6,11 +6,11 @@
 set -e
 
 # Default world
-DEFAULT_WORLD=""
+DEFAULT_WORLD="worlds/test_world.sdf"
 WORLD_FILE=${1:-$DEFAULT_WORLD}
 
 # Docker image name
-DOCKER_IMAGE="mowbot-gazebo-sim:latest"
+DOCKER_IMAGE="ghcr.io/serene4mr/mowbot-gazebo-sim:latest"
 
 # Function to check if Docker is available
 check_docker() {
@@ -27,7 +27,7 @@ check_docker() {
 
 # Function to check if Docker image exists
 check_image() {
-    if ! docker images | grep -q "mowbot-gazebo-sim.*latest"; then
+    if ! docker images | grep -q "ghcr.io/serene4mr/mowbot-gazebo-sim.*latest"; then
         echo "Error: Docker image '$DOCKER_IMAGE' not found"
         echo "Please build the image first: ./docker/build.sh"
         exit 1

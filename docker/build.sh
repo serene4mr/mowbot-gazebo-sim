@@ -6,7 +6,7 @@
 set -e
 
 # Default values
-IMAGE_NAME="mowbot-gazebo-sim"
+IMAGE_NAME="ghcr.io/serene4mr/mowbot-gazebo-sim"
 TAG="latest"
 BUILD_CONTEXT="."
 DOCKERFILE="docker/Dockerfile"

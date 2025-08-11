@@ -47,7 +47,7 @@ mowbot-gazebo-sim/
    ./docker/build.sh
    
    # Or manually
-   docker build -f docker/Dockerfile -t mowbot-gazebo-sim .
+   docker build -f docker/Dockerfile -t ghcr.io/serene4mr/mowbot-gazebo-sim:latest .
    ```
 
 2. **Run the simulation:**
@@ -56,7 +56,7 @@ mowbot-gazebo-sim/
      -e DISPLAY=$DISPLAY \
      -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
      --network=host \
-     mowbot-gazebo-sim
+     ghcr.io/serene4mr/mowbot-gazebo-sim:latest
    ```
 
 ### Using Docker Compose
