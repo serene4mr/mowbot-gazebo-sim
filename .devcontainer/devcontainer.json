@@ -1,7 +1,8 @@
 {
   "name": "Mowbot Gazebo Simulation",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "mowbot-gazebo-dev",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   
   "customizations": {
     "vscode": {
@@ -48,6 +49,8 @@
   "postCreateCommand": "echo 'Gazebo development environment ready!' && gz --version",
 
   "forwardPorts": [11345],
+
+  "runArgs": ["--network=host"],
 
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/workspace",
