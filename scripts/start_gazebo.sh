@@ -6,7 +6,7 @@
 set -e
 
 # Default world
-DEFAULT_WORLD="worlds/test_world.sdf"
+DEFAULT_WORLD="gazebo_resources/worlds/test_world.sdf"
 WORLD_FILE=${1:-$DEFAULT_WORLD}
 
 # Docker image name

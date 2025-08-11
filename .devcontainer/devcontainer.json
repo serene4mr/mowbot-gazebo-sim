@@ -1,0 +1,56 @@
+{
+  "name": "Mowbot Gazebo Simulation",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "mowbot-gazebo-dev",
+  
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "ms-vscode.python",
+        "ms-vscode.yaml",
+        "ms-vscode.json",
+        "ms-vscode.xml",
+        "ms-vscode.docker",
+        "ms-vscode.remote-containers"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "files.associations": {
+          "*.sdf": "xml",
+          "*.world": "xml",
+          "*.urdf": "xml",
+          "*.xacro": "xml"
+        }
+      }
+    }
+  },
+
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  "mounts": [
+    "source=${localWorkspaceFolder}/gazebo_resources,target=/opt/gazebo/gazebo_resources,type=bind,consistency=cached",
+    "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind"
+  ],
+
+  "remoteEnv": {
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "GAZEBO_MODEL_PATH": "/opt/gazebo/models:/opt/gazebo/gazebo_resources/models",
+    "GAZEBO_RESOURCE_PATH": "/opt/gazebo/worlds:/opt/gazebo/gazebo_resources/worlds",
+    "GAZEBO_PLUGIN_PATH": "/opt/gazebo/plugins:/opt/gazebo/gazebo_resources/plugins",
+    "GAZEBO_MATERIAL_PATH": "/opt/gazebo/materials:/opt/gazebo/gazebo_resources/materials"
+  },
+
+  "postCreateCommand": "echo 'Gazebo development environment ready!' && gz --version",
+
+  "forwardPorts": [11345],
+
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace",
+
+  "shutdownAction": "stopContainer"
+}

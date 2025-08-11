@@ -14,9 +14,12 @@ services:
       - GAZEBO_PLUGIN_PATH=/opt/gazebo/plugins
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - ./worlds:/opt/gazebo/worlds:ro
-      - ./models:/opt/gazebo/models:ro
-      - ./plugins:/opt/gazebo/plugins:ro
+      - ./gazebo_resources/worlds:/opt/gazebo/worlds:ro
+      - ./gazebo_resources/models:/opt/gazebo/models:ro
+      - ./gazebo_resources/plugins:/opt/gazebo/plugins:ro
+      - ./gazebo_resources/materials:/opt/gazebo/materials:ro
+      - ./gazebo_resources/textures:/opt/gazebo/textures:ro
+      - ./gazebo_resources/meshes:/opt/gazebo/meshes:ro
       - ./assets:/opt/gazebo/assets:ro
     network_mode: host
     ports:

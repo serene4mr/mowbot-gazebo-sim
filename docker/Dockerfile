@@ -39,10 +39,13 @@ RUN mkdir -p /opt/gazebo/{worlds,models,plugins,assets}
 # Copy entrypoint script
 COPY docker/entrypoint.sh /opt/gazebo/entrypoint.sh
 
-# Copy simulation assets
-COPY worlds/ /opt/gazebo/worlds/
-COPY models/ /opt/gazebo/models/
-COPY plugins/ /opt/gazebo/plugins/
+# Copy simulation assets from gazebo_resources
+COPY gazebo_resources/worlds/ /opt/gazebo/worlds/
+COPY gazebo_resources/models/ /opt/gazebo/models/
+COPY gazebo_resources/plugins/ /opt/gazebo/plugins/
+COPY gazebo_resources/materials/ /opt/gazebo/materials/
+COPY gazebo_resources/textures/ /opt/gazebo/textures/
+COPY gazebo_resources/meshes/ /opt/gazebo/meshes/
 COPY assets/ /opt/gazebo/assets/
 COPY scripts/ /opt/gazebo/scripts/
 

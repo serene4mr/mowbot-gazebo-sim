@@ -21,23 +21,35 @@ mowbot-gazebo-sim/
 │   ├── docker-compose.yml      # Container orchestration
 │   ├── entrypoint.sh           # Container startup script
 │   └── build.sh                # Build utility script
-├── worlds/                      # Simulation world files
-│   ├── lawn_world.sdf          # Main lawn environment
-│   ├── test_area.world         # Testing environment
-│   └── empty_world.sdf         # Empty world for testing
-├── models/                      # Environmental assets (non-robot)
-│   ├── tree/
-│   ├── fence/
-│   └── shed/
-├── plugins/                     # Custom Gazebo plugins
-│   └── custom_grass_plugin.cc
+├── gazebo_resources/           # All Gazebo simulation assets
+│   ├── worlds/                 # Simulation world files
+│   │   ├── test_world.sdf      # Test environment
+│   │   ├── baylands.world      # Baylands environment
+│   │   └── empty_world.sdf     # Empty world for testing
+│   ├── models/                 # Environmental assets (non-robot)
+│   ├── plugins/                # Custom Gazebo plugins
+│   ├── materials/              # Material definitions
+│   ├── textures/               # Texture files
+│   └── meshes/                 # 3D mesh files
 ├── scripts/                     # Launch and utility scripts
 │   └── start_gazebo.sh
-├── assets/                      # Textures, meshes, etc.
+├── assets/                      # Additional simulation assets
+├── .devcontainer/               # VS Code Dev Container configuration
+│   ├── devcontainer.json       # Dev container settings
+│   ├── Dockerfile              # Development environment
+│   ├── docker-compose.yml      # Dev container orchestration
+│   └── README.md               # Development guide
 └── README.md                    # This file
-```
 
 ## Quick Start
+
+### Using VS Code Dev Container (Recommended for Development)
+
+1. **Open in VS Code** with the Remote - Containers extension
+2. **Click "Reopen in Container"** when prompted
+3. **Start developing!** All tools and environment are pre-configured
+
+See `.devcontainer/README.md` for detailed development workflow.
 
 ### Using Docker
 
@@ -85,19 +97,19 @@ gz service -s /world/lawn_world/create \
 
 ### Adding New Worlds
 
-1. Create your `.sdf` or `.world` file in the `worlds/` directory
+1. Create your `.sdf` or `.world` file in the `gazebo_resources/worlds/` directory
 2. Update the launch scripts to include your new world
-3. Test with: `gz sim /worlds/your_new_world.sdf`
+3. Test with: `./scripts/start_gazebo.sh gazebo_resources/worlds/your_new_world.sdf`
 
 ### Adding Environmental Models
 
-1. Place model files in the `models/` directory
+1. Place model files in the `gazebo_resources/models/` directory
 2. Ensure models follow Gazebo's model structure
 3. Reference them in your world files
 
 ### Custom Plugins
 
-1. Develop plugins in the `plugins/` directory
+1. Develop plugins in the `gazebo_resources/plugins/` directory
 2. Build and install them in the Dockerfile
 3. Reference them in your world files
 
