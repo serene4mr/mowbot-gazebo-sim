@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  gazebo-sim:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: mowbot-gazebo-sim
+    environment:
+      - DISPLAY=${DISPLAY}
+      - GAZEBO_MODEL_PATH=/opt/gazebo/models
+      - GAZEBO_RESOURCE_PATH=/opt/gazebo/worlds
+      - GAZEBO_PLUGIN_PATH=/opt/gazebo/plugins
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./worlds:/opt/gazebo/worlds:ro
+      - ./models:/opt/gazebo/models:ro
+      - ./plugins:/opt/gazebo/plugins:ro
+      - ./assets:/opt/gazebo/assets:ro
+    network_mode: host
+    ports:
+      - "11345:11345"  # Gazebo communication port
+    stdin_open: true
+    tty: true
+    command: gz sim /opt/gazebo/worlds/lawn_world.sdf
+    restart: unless-stopped
+
+  # Optional: Add a service for your ROS 2 application
+  # ros2-app:
+  #   image: your-ros2-app-image
+  #   container_name: mowbot-ros2-app
+  #   network_mode: host
+  #   depends_on:
+  #     - gazebo-sim
+  #   environment:
+  #     - DISPLAY=${DISPLAY}
+  #   volumes:
+  #     - /tmp/.X11-unix:/tmp/.X11-unix:rw
+  #   command: ros2 launch mowbot_bringup robot.launch.py
