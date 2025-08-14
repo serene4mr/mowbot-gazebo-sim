@@ -47,6 +47,8 @@ ENV GAZEBO_RESOURCE_PATH="/opt/gazebo/worlds:/opt/gazebo/gazebo_resources/worlds
 ENV GAZEBO_PLUGIN_PATH="/opt/gazebo/plugins:/opt/gazebo/gazebo_resources/plugins"
 ENV GAZEBO_MATERIAL_PATH="/opt/gazebo/materials:/opt/gazebo/gazebo_resources/materials"
 
+
+
 # Create a development entrypoint
 COPY dev-entrypoint.sh /usr/local/bin/dev-entrypoint.sh
 RUN chmod +x /usr/local/bin/dev-entrypoint.sh

@@ -13,11 +13,17 @@
     </scene>
     <!-- A global light source -->
     <include>
-      <uri>model://sun</uri>
+      <uri>
+      <!-- model://sun -->
+      https://fuel.gazebosim.org/1.0/OpenRobotics/models/Sun
+      </uri>
     </include>
 
     <include>
-      <uri>model://baylands</uri>
+      <uri>
+      <!-- model://baylands -->
+      https://fuel.gazebosim.org/1.0/OpenRobotics/models/Baylands
+      </uri>
     </include>
 
     <spherical_coordinates>
