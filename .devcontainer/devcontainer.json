@@ -1,7 +1,30 @@
 {
   "name": "Mowbot Gazebo Simulation",
   "image": "ghcr.io/serene4mr/mowbot-gazebo-sim:latest",
-  
+  "hostRequirements": {
+    "gpu": "optional"
+  },
+  "runArgs": [
+    "--network=host",
+    "--ipc=host",
+    "--privileged",
+    "--device=/dev/dxg",
+    "--volume=/usr/lib/wsl:/usr/lib/wsl",
+    "--volume=/tmp/.X11-unix:/tmp/.X11-unix:rw",
+    "--volume=/mnt/wslg:/mnt/wslg",
+    "--volume=/dev:/dev"
+  ],
+  "remoteEnv": {
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}",
+    "XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
+    "PULSE_SERVER": "${localEnv:PULSE_SERVER}",
+    "NVIDIA_VISIBLE_DEVICES": "all",
+    "NVIDIA_DRIVER_CAPABILITIES": "all",
+    "QT_X11_NO_MITSHM": "1",
+    "LIBGL_ALWAYS_INDIRECT": "0",
+    "MESA_D3D12_DEFAULT_ADAPTER_NAME": "NVIDIA"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
@@ -25,23 +48,8 @@
       }
     }
   },
-
-
-
-
-
-  "remoteEnv": {
-    "DISPLAY": "${localEnv:DISPLAY}"
-  },
-
-
-
   "forwardPorts": [11345],
-
-  "runArgs": ["--network=host"],
-
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/workspace",
-
   "shutdownAction": "stopContainer"
 }

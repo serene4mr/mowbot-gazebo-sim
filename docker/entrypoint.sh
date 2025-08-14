@@ -1,48 +1,55 @@
 #!/bin/bash
-
-# Mowbot Gazebo Simulation Container Entrypoint
-# This script runs when the container starts
-
 set -e
 
-echo "=== Mowbot Gazebo Simulation Container ==="
-echo "Container started at: $(date)"
-echo "Gazebo version: $(gz sim --version 2>/dev/null || echo 'Not available')"
-echo ""
+# Function to add path if directory exists and has content
+add_resource_path() {
+    if [ -d "$1" ] && [ "$(ls -A $1 2>/dev/null)" ]; then
+        if [ -z "$GZ_SIM_RESOURCE_PATH" ]; then
+            export GZ_SIM_RESOURCE_PATH="$1"
+        else
+            export GZ_SIM_RESOURCE_PATH="$1:$GZ_SIM_RESOURCE_PATH"
+        fi
+        echo "Added to GZ_SIM_RESOURCE_PATH: $1"
+    fi
+}
 
-# Set environment variables
-export GAZEBO_MODEL_PATH="/opt/gazebo/models:${GAZEBO_MODEL_PATH:-}"
-export GAZEBO_RESOURCE_PATH="/opt/gazebo/worlds:${GAZEBO_RESOURCE_PATH:-}"
-export GAZEBO_PLUGIN_PATH="/opt/gazebo/plugins:${GAZEBO_PLUGIN_PATH:-}"
+echo "=== Gazebo Harmonic Container Setup ==="
 
-echo "Environment variables set:"
-echo "  GAZEBO_MODEL_PATH: $GAZEBO_MODEL_PATH"
-echo "  GAZEBO_RESOURCE_PATH: $GAZEBO_RESOURCE_PATH"
-echo "  GAZEBO_PLUGIN_PATH: $GAZEBO_PLUGIN_PATH"
-echo ""
+# Source ROS 2 environment
+source /opt/ros/humble/setup.bash
+echo "✓ ROS 2 Humble sourced"
 
-# Check if custom world is provided
-if [ -n "$WORLD_FILE" ]; then
-    echo "Using custom world: $WORLD_FILE"
-    WORLD_PATH="$WORLD_FILE"
-else
-    # Default world
-    WORLD_PATH="/opt/gazebo/worlds/lawn_world.sdf"
-    echo "Using default world: $WORLD_PATH"
-fi
+# Initialize GZ_SIM_RESOURCE_PATH
+export GZ_SIM_RESOURCE_PATH=""
 
-# Check if world file exists
-if [ ! -f "$WORLD_PATH" ]; then
-    echo "Error: World file not found: $WORLD_PATH"
-    echo "Available worlds:"
-    ls -la /opt/gazebo/worlds/ || echo "No worlds directory found"
-    exit 1
-fi
+# Add container resources (your custom resources)
+echo "Adding container resources..."
+add_resource_path "/opt/gazebo/models"
+add_resource_path "/opt/gazebo/worlds" 
+add_resource_path "/opt/gazebo/assets"
+add_resource_path "/opt/gazebo/meshes"
 
-echo ""
-echo "Starting Gazebo simulation..."
-echo "World: $WORLD_PATH"
-echo ""
+# Add workspace resources (for dev container bind mounts)
+echo "Checking for workspace resources..."
+add_resource_path "/workspace/gazebo_resources/models"
+add_resource_path "/workspace/gazebo_resources/worlds"
+add_resource_path "/workspace/gazebo_resources/assets"
+add_resource_path "/workspace/gazebo_resources/meshses"  # Note: matches your dir name
 
-# Start Gazebo with the specified world
-exec gz sim "$WORLD_PATH"
+# Set legacy environment variables for compatibility
+export GAZEBO_MODEL_PATH="$GZ_SIM_RESOURCE_PATH"
+export GAZEBO_RESOURCE_PATH="$GZ_SIM_RESOURCE_PATH"
+export GAZEBO_PLUGIN_PATH="/opt/gazebo/plugins"
+
+# Display configuration
+echo "=== Environment Configuration ==="
+echo "GZ_SIM_RESOURCE_PATH: $GZ_SIM_RESOURCE_PATH"
+echo "GAZEBO_MODEL_PATH: $GAZEBO_MODEL_PATH"
+echo "GAZEBO_RESOURCE_PATH: $GAZEBO_RESOURCE_PATH"
+
+# List available worlds for verification
+echo "=== Available Worlds ==="
+find /opt/gazebo/worlds -name "*.sdf" -o -name "*.world" 2>/dev/null || echo "No world files found"
+
+echo "=== Starting Gazebo ==="
+exec "$@"
