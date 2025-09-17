@@ -22,6 +22,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxext6 libxrender1 libxtst6 \
     # Additional development tools
     build-essential cmake git python3-pip python3-dev \
+    # Plugin development dependencies (optional - add if you plan to build plugins)
+    # libgz-sim8-dev rapidjson-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Add Gazebo Harmonic repository and install it
@@ -38,6 +40,9 @@ COPY gazebo_resources/models/ /opt/gazebo/models/
 COPY gazebo_resources/worlds/ /opt/gazebo/worlds/
 COPY gazebo_resources/assets/ /opt/gazebo/assets/
 COPY gazebo_resources/meshses/ /opt/gazebo/meshes/
+
+# Copy custom plugins if you have any (uncomment when you add plugins)
+COPY gazebo_resources/plugins/ /opt/gazebo/plugins/
 
 # Copy entrypoint script and utility scripts
 COPY docker/entrypoint.sh /opt/gazebo/entrypoint.sh

@@ -51,5 +51,6 @@
   "forwardPorts": [11345],
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/workspace",
-  "shutdownAction": "stopContainer"
+  "shutdownAction": "stopContainer",
+  "postCreateCommand": "echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc"
 }
