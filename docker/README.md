@@ -4,7 +4,7 @@ This folder contains all Docker-related files for the Mowbot Gazebo Simulation e
 
 ## Files
 
-- **Dockerfile** - Container image definition with Gazebo Harmonic
+- **Dockerfile** - Container image definition with Gazebo Fortress
 - **docker-compose.yml** - Multi-container orchestration
 - **entrypoint.sh** - Container startup script with environment setup
 - **build.sh** - Build utility with various options

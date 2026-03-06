@@ -1,57 +1,17 @@
-FROM ghcr.io/serene4mr/mowbot-gazebo-sim:latest
+# hadolint global ignore=DL3006
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
 
-# Install additional development tools
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    wget \
-    nano \
-    vim \
-    htop \
-    tree \
-    build-essential \
-    cmake \
-    pkg-config \
-    python3-pip \
-    python3-dev \
-    x11-apps \
-    x11-utils \
-    xvfb \
-    && rm -rf /var/lib/apt/lists/*
+ENV SHELL /bin/bash
 
-# Install Python development packages
-RUN pip3 install --no-cache-dir \
-    numpy \
-    matplotlib \
-    jupyter \
-    ipython
+ARG USERNAME=mowbot
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
 
-# Install additional Gazebo development tools
-RUN apt-get update && apt-get install -y \
-    gz-harmonic-dev \
-    libgz-cmake3-dev \
-    libgz-common5-dev \
-    libgz-math7-dev \
-    libgz-msgs10-dev \
-    libgz-transport14-dev \
-    libgz-utils2-dev \
-    && rm -rf /var/lib/apt/lists/*
+# Create development user for VS Code
+RUN groupadd --gid $USER_GID $USERNAME \
+  && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+  && echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} \
+  && chmod 0440 /etc/sudoers.d/${USERNAME}
 
-# Create development workspace
-WORKDIR /workspace
-
-# Set up development environment
-ENV DISPLAY="${DISPLAY:-:0}"
-ENV GAZEBO_MODEL_PATH="/opt/gazebo/models:/opt/gazebo/gazebo_resources/models"
-ENV GAZEBO_RESOURCE_PATH="/opt/gazebo/worlds:/opt/gazebo/gazebo_resources/worlds"
-ENV GAZEBO_PLUGIN_PATH="/opt/gazebo/plugins:/opt/gazebo/gazebo_resources/plugins"
-ENV GAZEBO_MATERIAL_PATH="/opt/gazebo/materials:/opt/gazebo/gazebo_resources/materials"
-
-
-
-# Create a development entrypoint
-COPY dev-entrypoint.sh /usr/local/bin/dev-entrypoint.sh
-RUN chmod +x /usr/local/bin/dev-entrypoint.sh
-
-# Default to bash for development
-CMD ["/bin/bash"]
+USER $USERNAME

@@ -1,2 +1,2 @@
-export GZ_SIM_RESOURCE_PATH=$GZ_SIM_RESOURCE_PATH:/workspace/gazebo_resources/models
-gz sim /workspace/gazebo_resources/worlds/baylands.world
+export IGN_GAZEBO_RESOURCE_PATH=$IGN_GAZEBO_RESOURCE_PATH:/workspace/gazebo_resources/models
+ign gazebo /workspace/gazebo_resources/worlds/baylands.world

@@ -17,7 +17,7 @@ This repository contains only the Gazebo simulation environment and serves as a 
 ```
 mowbot-gazebo-sim/
 ├── docker/                      # Docker configuration and scripts
-│   ├── Dockerfile              # Gazebo Harmonic container setup
+│   ├── Dockerfile              # Gazebo Fortress container setup
 │   ├── docker-compose.yml      # Container orchestration
 │   ├── entrypoint.sh           # Container startup script
 │   └── build.sh                # Build utility script
@@ -86,8 +86,8 @@ cd docker && docker-compose up
 In your main mowbot ROS 2 repository, you can spawn robots into this running world using:
 
 ```bash
-# Spawn a robot entity
-gz service -s /world/lawn_world/create \
+# Spawn a robot entity (Fortress uses ign CLI)
+ign service -s /world/lawn_world/create \
   --reqtype gz.msgs.EntityFactory \
   --reptype gz.msgs.Boolean \
   -r 'sdf_filename: "path/to/robot.sdf"'
@@ -119,7 +119,7 @@ gz service -s /world/lawn_world/create \
 ✅ **Environmental models/assets** (grass, fences, trees, buildings)  
 ✅ **Generic Gazebo plugins** for simulation physics or environment sensors  
 ✅ **Simulation launch scripts**  
-✅ **Docker configuration** for Gazebo Sim Harmonic  
+✅ **Docker configuration** for Gazebo Fortress  
 ✅ **Container orchestration** with Docker Compose  
 ✅ **Build utilities** for easy container management  
 
@@ -133,7 +133,7 @@ gz service -s /world/lawn_world/create \
 
 The `docker/` folder contains all container-related files:
 
-- **Dockerfile** - Container image definition with Gazebo Harmonic
+- **Dockerfile** - Container image definition with Gazebo Fortress
 - **docker-compose.yml** - Multi-container orchestration
 - **entrypoint.sh** - Container startup and environment setup
 - **build.sh** - Build utility with options for different configurations

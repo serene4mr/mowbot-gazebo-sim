@@ -1,8 +1,21 @@
 {
   "name": "Mowbot Gazebo Simulation",
-  "image": "ghcr.io/serene4mr/mowbot-gazebo-sim:latest",
-  "hostRequirements": {
-    "gpu": "optional"
+  // "image": "ghcr.io/serene4mr/mowbot-gazebo-sim:latest",
+  "build": {
+    "dockerfile": "./Dockerfile",
+    "context": "..",
+    "args": {
+        "USERNAME": "${localEnv:USER}"
+    },
+    "options": [
+        "--pull=false",
+        "--build-arg", "BASE_IMAGE=ghcr.io/serene4mr/mowbot-gazebo-sim:latest"
+    ]
+  },
+  "remoteUser": "${localEnv:USER}",
+  "updateRemoteUserUID": true,
+  "containerEnv": {
+    "DISPLAY": "${localEnv:DISPLAY}"
   },
   "runArgs": [
     "--network=host",
@@ -14,17 +27,6 @@
     "--volume=/mnt/wslg:/mnt/wslg",
     "--volume=/dev:/dev"
   ],
-  "remoteEnv": {
-    "DISPLAY": "${localEnv:DISPLAY}",
-    "WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}",
-    "XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
-    "PULSE_SERVER": "${localEnv:PULSE_SERVER}",
-    "NVIDIA_VISIBLE_DEVICES": "all",
-    "NVIDIA_DRIVER_CAPABILITIES": "all",
-    "QT_X11_NO_MITSHM": "1",
-    "LIBGL_ALWAYS_INDIRECT": "0",
-    "MESA_D3D12_DEFAULT_ADAPTER_NAME": "NVIDIA"
-  },
   "customizations": {
     "vscode": {
       "extensions": [
@@ -36,21 +38,7 @@
         "ms-vscode.xml",
         "ms-vscode.docker",
         "ms-vscode.remote-containers"
-      ],
-      "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash",
-        "files.associations": {
-          "*.sdf": "xml",
-          "*.world": "xml",
-          "*.urdf": "xml",
-          "*.xacro": "xml"
-        }
-      }
+      ]
     }
-  },
-  "forwardPorts": [11345],
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
-  "workspaceFolder": "/workspace",
-  "shutdownAction": "stopContainer",
-  "postCreateCommand": "echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc"
+  }
 }

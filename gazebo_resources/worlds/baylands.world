@@ -35,10 +35,10 @@
       name="gz::sim::systems::Imu">
     </plugin>
     
-    <!-- NavSat (GPS) sensor system -->
+    <!-- NavSat (GPS) – Fortress uses Ignition naming -->
     <plugin
-      filename="gz-sim-navsat-system"
-      name="gz::sim::systems::NavSat">
+      filename="ignition-gazebo-navsat-system"
+      name="ignition::gazebo::systems::NavSat">
     </plugin>
     
     <!-- ========== SCENE CONFIGURATION ========== -->
