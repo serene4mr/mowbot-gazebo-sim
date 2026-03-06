@@ -1,2 +1,2 @@
-export IGN_GAZEBO_RESOURCE_PATH=$IGN_GAZEBO_RESOURCE_PATH:/workspace/gazebo_resources/models
+export IGN_GAZEBO_RESOURCE_PATH=$IGN_GAZEBO_RESOURCE_PATH:/workspaces/mowbot-gazebo-sim/gazebo_resources/models
 ign gazebo /workspaces/mowbot-gazebo-sim/gazebo_resources/worlds/baylands.world
