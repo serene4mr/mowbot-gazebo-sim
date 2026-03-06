@@ -18,14 +18,17 @@
     "DISPLAY": "${localEnv:DISPLAY}"
   },
   "runArgs": [
-    "--network=host",
-    "--ipc=host",
+    "--name", "mowbot_gazebo_sim_dev",
+    "--net", "host",
+    "--ipc", "host",
+    "--pid", "host",
     "--privileged",
-    "--device=/dev/dxg",
-    "--volume=/usr/lib/wsl:/usr/lib/wsl",
-    "--volume=/tmp/.X11-unix:/tmp/.X11-unix:rw",
-    "--volume=/mnt/wslg:/mnt/wslg",
-    "--volume=/dev:/dev"
+    "--gpus", "all",
+    "-v", "/dev:/dev",
+    "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+    "-e", "DISPLAY",
+    "-e", "NVIDIA_VISIBLE_DEVICES=all",
+    "-e", "NVIDIA_DRIVER_CAPABILITIES=all"
   ],
   "customizations": {
     "vscode": {

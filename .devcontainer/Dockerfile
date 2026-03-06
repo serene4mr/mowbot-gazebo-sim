@@ -14,4 +14,6 @@ RUN groupadd --gid $USER_GID $USERNAME \
   && echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} \
   && chmod 0440 /etc/sudoers.d/${USERNAME}
 
+RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" > /etc/bash.bashrc
+
 USER $USERNAME
