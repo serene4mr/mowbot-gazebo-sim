@@ -1,6 +1,6 @@
 # hadolint global ignore=DL3006
-ARG BASE_IMAGE
-FROM $BASE_IMAGE
+ARG BASE_IMAGE=ghcr.io/serene4mr/mowbot-gazebo-sim:latest
+FROM ${BASE_IMAGE}
 
 ENV SHELL /bin/bash
 
